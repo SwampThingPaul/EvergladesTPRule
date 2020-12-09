@@ -1,8 +1,10 @@
 ---
 title: "Everglades Total Phosphorus Rule Assessment"
 output: 
-  html_document: 
+  html_document:
     toc: yes
+    includes:
+      after_body: footer.html
 editor_options: 
   chunk_output_type: console
 ---
@@ -173,6 +175,8 @@ TPRule.CompAssess=merge(TPRule.CompAssess,TPRule.LT.Network.Avg,by=c("Area","Sta
 imp.trans=unique(subset(TPRule.dat.LTScreen,LT.UseData=="Yes"&LTGM.rnd<=10)$Alias)
 ```
 
+Updated: `r paste(format(Sys.Date(),"%B %d, %Y"))`
+
 ***
 
 ## Data
@@ -212,7 +216,7 @@ Column definitions:
 
 * **Alias**: Monitoring location name, also called `Station.ID`.
 * **Area**: Includes four distinct areas within the Everglades Protection Area.
-* **Date.EST**: Date (YYY-MM-DD) in the Eastern Standard Timezone `EST`. 
+* **Date.EST**: Date (YYYY-MM-DD) in the Eastern Standard Timezone `EST`. 
 * **WY**: Florida Water Year (May - April).
 * **TPWeek**: A bi-weekly period starting with the the Florida Water Year. The start of week 1 is May 1st.
 * **Test.Name**: The analyte name, as showing in DBHYDRO. 
@@ -243,6 +247,27 @@ This information presents the annual total phosphorous (TP) criteria compliance 
  * For informational purposes, assessment of the ENP stations relative to the TP rule criteria are included. All stations in ENP achieved the long-term criterion in every year, with an average geometric mean of `r round(mean(subset(TPRule.CompAssess,WY==CurWY&Area=="ENP")$Geomean.Use,na.rm=T),0)` `r "\u03BCg/L"` across all stations for `r paste0("WY",CurWY)`.
 
  *	The increased percent of sites meeting the 10- and 15-`r "\u03BCg/L"` limits observed for `r paste0("WY",CurWY)` reflects the continued recovery from from prior climatic extremes, improved treatment of the inflows, and overall improvement in phosphorus conditions within the interior marsh due to restoration activities.
+
+***
+
+## Phosphorus Criterion Achievement Assessment
+
+An evaluation to determine achievement of the TP criterion was performed consistent with assessment protocol presented by Payne et al. (2007), and the four-part test outlined below and specified in the FDEP’s Water Quality Standards for Phosphorus within the Everglades Protection Area, referred to as the TP Rule (Section 62-302.540, F.A.C.). Achievement of the TP Rule is assessed for networks of impacted and unimpacted, spatially explicit monitoring locations in WCAs (i.e., LNWR [WCA-1], WCA-2, and WCA 3). Achievement of the phosphorus criterion is different for ENP than the established TP criterion for the EPA. As acknowledged by Section 62-302.530(4)(c), F.A.C., achievement of the TP criterion for ENP is assessed according to methods set forth in Appendix A of the Settlement Agreement (Case No. 88-1886-CIV-MORENO) until the Settlement Agreement is amended or terminated. Reports and supporting information related to TP assessments consistent with Appendix A of the Settlement Agreement can be found at [http://www.sfwmd.gov/toc](http://www.sfwmd.gov/toc){target="_blank"}. 
+
+
+Achievement of the TP criterion is assessed by a four-part test for each WCA using two networks of stations: impacted and unimpacted. According to Subparagraph 62-302.540(4)(d)2, F.A.C., of the TP Rule, individual stations in networks shall be deemed to be unimpacted for purposes of determining compliance assessment with the TP Rule if the five-year geometric mean is less than or equal to 10 `r "\u03BCg/L"` TP and the annual geometric mean is less than or equal to 15 `r "\u03BCg/L"` TP (see Appendix 3A-6 of this volume for more information). The four parts of the achievement test are as follows: 
+
+1. The five-year geometric mean averaged across all stations is less than or equal to 10 `r "\u03BCg/L"`.
+
+2. The annual geometric mean averaged across all stations is less than or equal to 10 `r "\u03BCg/L"` for three of five water years.
+
+3. The annual geometric mean averaged across all stations is less than or equal to 11 `r "\u03BCg/L"`.
+
+4. The annual geometric mean at all individual stations is less than or equal to 15 `r "\u03BCg/L"`. 
+
+The location of the TP criterion network monitoring sites established pursuant to the TP Rule used for the TP criterion assessment along with their classification as impacted or unimpacted are provided in **Figure 1**. Details concerning the selection of sites in the TP criterion monitoring networks and their classification can be found in Payne et al. (2007) and Julian (2015).
+
+Data collection from the complete TP criterion monitoring network was initiated in January 2007. Data availability is limited for certain portions of the EPA due to extremely dry conditions that have prevailed during a number of years since WY2007. Because the results of the TP criterion compliance assessment presented in this chapter could be affected by these data limitations, this evaluation should be considered preliminary and the results cautiously interpreted. It is expected that future assessments will improve as additional data sets are added. Data were screened according to the quality assurance and quality control procedures described in the FDEP protocol (see below).
 
 ***
 
@@ -385,7 +410,14 @@ TPRule.dat.LTScreen.xtab[,c("Area","Alias",as.character(periods.WYs))]%>%
 
 <br>
 
-## TP Rule Assessment
+***
+
+## TP Rule Assessment Results
+
+The results of the `r paste0("WY",CurWY-4," - ","WY",CurWY)` TP criterion assessment indicate that, even with the data limitations, the unimpacted portions of each WCA passed all four parts of the compliance test (as expected) and are, therefore, in compliance with the 10 µg/L TP criterion. Occasionally, individual sites within the unimpacted portions of the WCAs exhibited an annual site geometric mean TP concentration above 10 `r "\u00B5g/L"`, as expected, but in no case, did the values from any one unimpacted site result in an exceedance of the annual or long-term network limits. None of the annual geometric mean TP concentrations for the individual unimpacted sites during the `r paste0("WY",CurWY-4," - ","WY",CurWY)` period exceeded the 15 `r "\u00B5g/L"` annual site limit (**Figures** 2 and 3; **Table** 3).
+
+In contrast, the impacted (i.e., phosphorus-enriched) portions of each water body failed one or more parts of the test and, therefore, exceeded the criteria. The impacted portions of the WCAs routinely exceeded the annual and five-year network TP concentration limits of 11 and 10 `r "\u00B5g/L"`, respectively (**Figures** 2 and 3; **Table** 3). However, some impacted stations routinely experience concentrations below the long-term and annual limits, resulting in transitioning of impacted stations to unimpacted. To date, seven impacted stations across the EPA have transitioned to unimpacted (see above).
+
 
 ```{r,echo=F,fig.align="center",fig.width=5.5,fig.height=6,dpi=120,fig.cap=paste0("Figure 2. Network (impacted and unimpacted) trends for LNWR, WCA-2, and WCA 3 during WY2005 - WY",CurWY, " relative to the 10-\u03BCg/L long-term (five-year) and the 11-\u03BCg/L annual network limits for TP. (Note: Due to extreme weather events and drought conditions, a data gap exists for WY2007 within the LNWR and WY2017/2019 within WCA-3.)")}
 axislwd=1
@@ -550,4 +582,9 @@ legend(0.5,-0.75,legend=c("Impacted","Unimpacted","Annual Limit"),pch=c(22,22,NA
 
 * FDEP. 2004. Data Quality Screening Protocol. Florida Department of Environmental Protection, Tallahassee, FL. July 15, 2004. Available online at	 [https://floridadep.gov/sites/default/files/data-quality-screening-protocol.pdf](https://floridadep.gov/sites/default/files/data-quality-screening-protocol.pdf){target="_blank"}
 
+* Julian II, P. 2015. Appendix 3A-6: Water Year 2010–2014 Annual Total Phosphorus Criteria Compliance Assessment. In: 2015 South Florida Environmental Report – Volume I, South Florida Water Management District, West Palm Beach, FL
+
 * Julian, P., G.G. Payne, and S.K. Xue. 2016. Chapter 3A: Water Quality in the Everglades Protection Areas. In: 2016 South Florida Environmental Report – Volume I, South Florida Water Management District, West Palm Beach, FL.
+
+* Payne, G., K. Weaver, and S. Xue. 2007. Chapter 3C: Status of Phosphorus and Nitrogen in the Everglades Protection Area. In: 2007 South Florida Environmental Report – Volume I, South Florida Water Management District, West Palm Beach, FL.
+
