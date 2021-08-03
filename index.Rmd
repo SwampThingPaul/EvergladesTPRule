@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r,echo=FALSE,warning=FALSE,include=FALSE}
-CurWY=2020
+CurWY=2021
 
 ## Libraries
 # Data Wrangling
@@ -349,11 +349,12 @@ TPRule.AGM.ImpactAss.xtab[,c("Area","Alias",as.character(WYs))]%>%
   flextable()%>%
   colformat_num(j=3:ncol(TPRule.AGM.ImpactAss.xtab),na_str="---",digits=0)%>%
   font(fontname="Arial",part="all")%>%
-  fontsize(size=8,part="body")%>%
+  fontsize(size=8,part="all")%>%
+  padding(padding.bottom = 0.2, padding.top = 0.2, part = "all")%>%
   hline_top(border = officer::fp_border(width = 1.25))%>%
   hline_bottom(border = officer::fp_border(width = 1.25))%>%
   hline(border = officer::fp_border(width = 1.25), part = "all")%>%
-  fontsize(size=10)%>%
+  # fontsize(size=10)%>%
   align(j=3:ncol(TPRule.AGM.ImpactAss.xtab),align="center",part="all")%>%
   bg(j=3:ncol(TPRule.AGM.ImpactAss.xtab),bg=ifelse(cols==T,rgb(198/255,224/255,180/255),NA))%>%
   merge_v(j=c("Area"))%>%
@@ -363,7 +364,7 @@ TPRule.AGM.ImpactAss.xtab[,c("Area","Alias",as.character(WYs))]%>%
            ref_symbols = c(" a"))%>%
   footnote(i=~Alias%in%imp.trans,j=~Alias,value=as_paragraph(paste0(" Stations ",knitr::combine_words(imp.trans[order(match(imp.trans,site.order))])," transitioned from impacted to unimpacted.")),
            ref_symbols=c(" b"))%>%
-  width(width=c(0.7,1,rep(0.5,length(WYs))))%>%
+  width(width=c(0.8,1.1,rep(0.5,length(WYs))))%>%
   add_header_lines(values=cap.val)%>%fontsize(size=13,part="header")
 
 ```
@@ -383,13 +384,13 @@ TPRule.dat.LTScreen.xtab[,c("Area","Alias",as.character(periods.WYs))]%>%
   flextable()%>%
   colformat_num(j=3:ncol(TPRule.dat.LTScreen.xtab),na_str="---",digits=0)%>%
   theme_vanilla()%>%
-  padding(padding.bottom = 0.4, padding.top = 0.4, part = "all")%>%
-  fontsize(size=8,part="body")%>%
+  padding(padding.bottom = 0.2, padding.top = 0.2, part = "all")%>%
+  fontsize(size=8,part="all")%>%
   font(fontname="Arial",part="all")%>%
   hline_top(border = officer::fp_border(width = 1.25))%>%
   hline_bottom(border = officer::fp_border(width = 1.25))%>%
   hline(border = officer::fp_border(width = 1.25), part = "all")%>%
-  fontsize(size=10)%>%
+  # fontsize(size=10)%>%
   align(j=1:2,align="left",part="body")%>%
   align(j=1:2,align="center",part="header")%>%
   align(j=3:ncol(TPRule.dat.LTScreen.xtab),align="center",part="all")%>%
@@ -485,8 +486,9 @@ cap.val=paste0("Table 3. Annual TP criteria compliance assessment in the EPA for
 TPRule.CompAssess.tbl%>%
   #dplyr::mutate_at(dplyr::vars(TPRule.vars[8:12]),~ifelse(is.na(.)==T,"N/A",.))%>%
   flextable()%>%
+  colformat_double(i=3,big.mark="")%>%
   theme_vanilla()%>%
-  padding(padding.bottom = 0.4, padding.top = 0.4, part = "all")%>%
+  padding(padding.bottom = 0.2, padding.top = 0.2, part = "all")%>%
   fontsize(size=10,part="all")%>%#fontsize(size=9,part="header")%>%
   font(fontname="Arial",part="all")%>%
   align(j=1:4,align="left",part="body")%>%
